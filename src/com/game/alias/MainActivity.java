@@ -7,6 +7,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 public class MainActivity extends Activity {
+	public final static String SERVER = "SERVER";
+	public final static String ALIAS_WORD = "ALIAS_WORD";
+	public final static String CLIENT = "OWN_IP";
+	public final static String TURN = "TURN";
+	public final static String GUESSER = "GUESSER";
 	
 
 	@Override
@@ -27,6 +32,21 @@ public class MainActivity extends Activity {
 		return true;
 
 	}
+	public static String getOwnIp(){
+		//TODO heppu| how to get own ip
+		return "dummyownip";
+	}
+	private boolean startServer(){
+		Intent intent = new Intent(this, GameActivity.class);
+		String own_ip_address = getOwnIp();
+		intent.putExtra(SERVER, own_ip_address);
+		//who starts server, must wait the other person to start the game
+		intent.putExtra(TURN, false);
+		//who starts server is the guesser
+		intent.putExtra(GUESSER, true);
+		startActivity(intent);
+		return true;
+	}
 	 
 
 	@Override
@@ -35,6 +55,9 @@ public class MainActivity extends Activity {
 	    switch (item.getItemId()) {
 	        case R.id.connect_server:
 	        	connectServer();
+	            return true;
+	        case R.id.start_server:
+	        	startServer();
 	            return true;
 	        default:
 	            return super.onOptionsItemSelected(item);

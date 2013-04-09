@@ -13,5 +13,13 @@
     <string name="edit_message"> server ip-address e.g  82.131.29.171 </string>
     <string name="button_send"> Connect</string>
     <string name="title_activity_game">GameActivity</string>
+    <!-- Game view -->
+    <string name="send_hint">Send hint</string>
+    <string name="edit_hint">Type a hint here</string>    
+    <string name="send_guess">Send your guess</string>
+    <string name="edit_guess">Type a guess here</string>    
 
+    <string name="dummy_reply">Dummy reply</string>  
+    <string name="dummy_hint">Dummy hint</string>
+    
 </resources>
