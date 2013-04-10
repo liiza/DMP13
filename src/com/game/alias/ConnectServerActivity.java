@@ -9,7 +9,8 @@ import android.widget.Button;
 import android.widget.EditText;
 
 public class ConnectServerActivity extends Activity {
-	public final static String EXTRA_MESSAGE = "com.game.alias.MESSAGE";
+
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -25,14 +26,22 @@ public class ConnectServerActivity extends Activity {
 
 	public boolean sendIp(View view){
 		//Do something for the ip
-		//TODO heppu connect to server user gives
+		//TODO heppu connect to server user gives and send users own ip and alias word
 		EditText user_input = (EditText) findViewById(R.id.edit_message);
 		String ip_address = user_input.getText().toString();
+		String alias_word = "kakkulapio";
+		String own_ip = MainActivity.getOwnIp();
 		
 		//if everything goes ok, start game. Otherwise stay on page
 		Intent intent = new Intent(this, GameActivity.class);
-		intent.putExtra(EXTRA_MESSAGE, ip_address);
-		startActivity(intent);
+		intent.putExtra(MainActivity.SERVER, ip_address);
+		intent.putExtra(MainActivity.CLIENT, own_ip);
+		//who connects server, starts the game
+		intent.putExtra(MainActivity.TURN, true);
+		//who connects server is the person who knows the word
+		intent.putExtra(MainActivity.GUESSER, false);
+		
+		startActivity(intent);	
 		return true;
 	}
 }

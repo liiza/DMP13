@@ -14,16 +14,25 @@ public final class R {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int connect_server=0x7f070009;
+        public static final int connect_server=0x7f070012;
+        public static final int dummy_hint=0x7f070010;
+        public static final int dummy_reply=0x7f07000f;
         public static final int edit_message=0x7f070000;
-        public static final int ip_label=0x7f070003;
-        public static final int menu_settings=0x7f070007;
-        public static final int server_ip=0x7f070004;
-        public static final int server_status=0x7f070002;
-        public static final int start_server=0x7f070008;
-        public static final int status_label=0x7f070001;
-        public static final int word=0x7f070006;
-        public static final int word_label=0x7f070005;
+        public static final int guess=0x7f070004;
+        public static final int guess_button=0x7f070005;
+        public static final int hint=0x7f070002;
+        public static final int hint_button=0x7f070003;
+        public static final int ip_label=0x7f07000a;
+        public static final int listview=0x7f070007;
+        public static final int menu_settings=0x7f07000e;
+        public static final int server_connected=0x7f070001;
+        public static final int server_ip=0x7f07000b;
+        public static final int server_status=0x7f070009;
+        public static final int start_new_game_button=0x7f070006;
+        public static final int start_server=0x7f070011;
+        public static final int status_label=0x7f070008;
+        public static final int word=0x7f07000d;
+        public static final int word_label=0x7f07000c;
     }
     public static final class layout {
         public static final int activity_connect_server=0x7f030000;
@@ -44,13 +53,23 @@ public final class R {
          */
         public static final int connect_server_ins=0x7f040008;
         public static final int dialog_connected=0x7f040011;
+        public static final int dummy_hint=0x7f04001a;
+        public static final int dummy_reply=0x7f040019;
+        public static final int edit_guess=0x7f040016;
+        public static final int edit_hint=0x7f040014;
         public static final int edit_message=0x7f040009;
+        public static final int go_back_to=0x7f040018;
         public static final int hello_world=0x7f040001;
         public static final int main_page=0x7f040007;
         public static final int menu_settings=0x7f040002;
         public static final int ok=0x7f040012;
+        public static final int send_guess=0x7f040015;
+        /**  Game view 
+         */
+        public static final int send_hint=0x7f040013;
         public static final int server_ip_message=0x7f04000b;
         public static final int server_status_message=0x7f04000a;
+        public static final int start_new_game=0x7f040017;
         public static final int start_server=0x7f040003;
         public static final int start_server_text=0x7f04000f;
         public static final int stop_server_text=0x7f04000e;
