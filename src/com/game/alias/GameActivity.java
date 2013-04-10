@@ -33,7 +33,7 @@ public class GameActivity extends Activity {
 	   
 	    this.turn = intent.getBooleanExtra(MainActivity.TURN, true);
 	    this.guesser = intent.getBooleanExtra(MainActivity.GUESSER, false);
-	    this.alias_word = getAliasWord();
+	    this.alias_word = "kakkulapio"; //getAliasWord();
 	    	    
 //		View button = findViewById(R.id.go_back_to_button);
 //		button.setVisibility(View.GONE);
