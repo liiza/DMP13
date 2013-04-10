@@ -7,11 +7,19 @@
     <string name="start_server">Start Server</string>
     <string name="connect_server">Connect Server</string>
     <string name="title_activity_connect_server">ConnectServerActivity</string>
+    <string name="title_activity_start_server">StartServerActivity</string>
     <string name="main_page">Open menu from menu button to connect server or start new server</string>
     <!-- Connect server view -->
     <string name="connect_server_ins"> Type server ip-address here which you want to connect</string>
     <string name="edit_message"> server ip-address e.g  82.131.29.171 </string>
-    <string name="button_send"> Connect</string>
+    <string name="server_status_message"> Server Status </string>
+    <string name="server_ip_message"> Server IP </string>
+    <string name="button_send">Connect</string>
     <string name="title_activity_game">GameActivity</string>
+    <string name="stop_server_text">Stop Server</string>
+    <string name="start_server_text">Start Server</string>
+    <string name="word_label">Your word is</string>
+    <string name="dialog_connected">Connected to a client</string>
+     <string name="ok">Ok</string>
 
 </resources>

@@ -7,7 +7,8 @@
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="17" />
-
+   
+	<uses-permission android:name="android.permission.INTERNET"></uses-permission>
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -25,6 +26,10 @@
         <activity
             android:name="com.game.alias.ConnectServerActivity"
             android:label="@string/title_activity_connect_server" >
+        </activity>
+         <activity
+            android:name="com.game.alias.StartServerActivity"
+            android:label="@string/title_activity_start_server" >
         </activity>
         <activity
             android:name="com.game.alias.GameActivity"

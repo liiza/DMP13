@@ -21,11 +21,17 @@ public class MainActivity extends Activity {
 		getMenuInflater().inflate(R.menu.activity_main, menu);
 		return true;
 	}
+	
 	private boolean connectServer(){
 		Intent intent = new Intent(this, ConnectServerActivity.class);
 		startActivity(intent);
 		return true;
-
+	}
+	
+	private boolean startServer(){
+		Intent intent = new Intent(this, StartServerActivity.class);
+		startActivity(intent);
+		return true;
 	}
 	 
 
@@ -33,6 +39,9 @@ public class MainActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 	    // Handle item selection
 	    switch (item.getItemId()) {
+	    	case R.id.start_server:
+	    		startServer();
+	    		return true;
 	        case R.id.connect_server:
 	        	connectServer();
 	            return true;
