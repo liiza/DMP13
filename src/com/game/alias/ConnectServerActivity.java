@@ -1,5 +1,10 @@
 package com.game.alias;
 
+import java.io.IOException;
+
+import connection.Connector;
+import connection.Packet;
+import connection.PacketType;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -26,11 +31,23 @@ public class ConnectServerActivity extends Activity {
 
 	public boolean sendIp(View view){
 		//Do something for the ip
-		//TODO heppu connect to server user gives and send users own ip and alias word
-		EditText user_input = (EditText) findViewById(R.id.edit_message);
+		EditText user_input = (EditText) findViewById(R.id.edit_message);	
 		String ip_address = user_input.getText().toString();
 		String alias_word = "kakkulapio";
 		String own_ip = MainActivity.getOwnIp();
+		
+		try {
+			Connector.INSTANCE.connect(ip_address);
+			String ip = Connector.INSTANCE.listen(PacketType.CONNECT).getMessage();
+			if(!ip.equals(ip_address)){
+				//display error message, something went wrong
+			}
+			Connector.INSTANCE.send(new Packet(PacketType.START, alias_word));
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 		
 		//if everything goes ok, start game. Otherwise stay on page
 		Intent intent = new Intent(this, GameActivity.class);

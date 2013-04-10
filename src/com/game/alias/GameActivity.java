@@ -1,8 +1,13 @@
 package com.game.alias;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import connection.Connector;
+import connection.Packet;
+import connection.PacketType;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -115,11 +120,16 @@ public class GameActivity extends Activity {
 	 * Called when the game is restarted. The roles are automatically switched.
 	 */
 	public void restartGame(View view){
-		//TODO heppu| send a message to the other player that he must also restart the game
 		
 		View button2 = findViewById(R.id.start_new_game_button);
 		button2.setVisibility(View.GONE);
 		this.alias_word = getAliasWord();
+		
+		try {
+			Connector.INSTANCE.send(new Packet(PacketType.RESTART,alias_word));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		
 		//switch roles
 		this.guesser = !this.guesser;
@@ -190,8 +200,16 @@ public class GameActivity extends Activity {
 	 */
 	public void sendGuess(View view){
 		//TODO heppu| send guess to opponent
+		
 		EditText user_input = (EditText) findViewById(R.id.guess);
 		String guess = user_input.getText().toString();
+		
+		try {
+			Connector.INSTANCE.send(new Packet(PacketType.GUESS, guess));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 		//change turn 
 		this.turn = false;
 		if (guess.equals(this.alias_word)) {
@@ -226,6 +244,12 @@ public class GameActivity extends Activity {
 		//TODO heppu| send hint to opponent
 		EditText user_input = (EditText) findViewById(R.id.hint);
 		String hint = user_input.getText().toString();
+		
+		try {
+			Connector.INSTANCE.send(new Packet(PacketType.HINT,hint));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		
 		//change turn and change text
 		this.turn = false;

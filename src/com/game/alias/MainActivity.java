@@ -1,6 +1,9 @@
 package com.game.alias;
 
+import java.io.IOException;
 import java.util.ArrayList;
+
+import connection.Connector;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -57,17 +60,14 @@ public class MainActivity extends ListActivity {
 		startActivity(intent);
 		return true;
 	}
-	
-//	private boolean startServer(){
-//		Intent intent = new Intent(this, StartServerActivity.class);
-//		startActivity(intent);
-//		return true;
-//	}
-	 
 
 	public static String getOwnIp() {
-		// TODO heppu| how to get own ip
-		return "dummyownip";
+		try {
+			return Connector.INSTANCE.getAddress();
+		} catch (IOException e) {
+			e.printStackTrace();
+			return "Failed to retrieve IP";
+		}
 	}
 
 	private boolean startServer() {
