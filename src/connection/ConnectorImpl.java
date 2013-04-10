@@ -24,7 +24,6 @@ public class ConnectorImpl implements Connector {
 	
 	private boolean connected = false;
 
-	private String connectedIP;
 	private String address;
 	private ServerSocket serverSocket;
 	private Socket clientSocket;
@@ -51,7 +50,8 @@ public class ConnectorImpl implements Connector {
 			return false;
 		}
 		
-		connectedIP = listen(PacketType.CONNECT).getMessage();
+		String ip = listen(PacketType.CONNECT).getMessage();
+		connect(ip);
 		return true;
 	}
 
@@ -64,7 +64,6 @@ public class ConnectorImpl implements Connector {
 
 		InetAddress serverAddr = InetAddress.getByName(ip);
 		clientSocket = new Socket(serverAddr, SERVER_PORT);
-		connectedIP = ip;
 		connected = true;
 		return send(new Packet(PacketType.CONNECT,address));
 	}
@@ -92,6 +91,12 @@ public class ConnectorImpl implements Connector {
 		out.println(packet.toString());
 		return true;
 	}
+	
+	@Override
+	public String getAddress() throws IOException {
+		init();
+		return this.address;
+	}
 
 	private void init() throws IOException {
 		{
@@ -117,4 +122,5 @@ public class ConnectorImpl implements Connector {
 			throw new SocketException();
 		}
 	}
+
 }

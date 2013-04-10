@@ -8,7 +8,8 @@ import java.util.Random;
 
 public class DummyConnector implements Connector {
 	
-	private static final String connectedIP = "127.0.0.1";
+	private static final String connectedIP = "255.10.12.1";
+	private static final String address = "127.0.0.1";
 	
 	private static final List<String> GUESSES = new ArrayList<String>();
 	
@@ -100,6 +101,11 @@ public class DummyConnector implements Connector {
 		
 		listen(PacketType.CONNECT).getMessage();
 		return true;
+	}
+
+	@Override
+	public String getAddress() throws IOException {
+		return address;
 	}
 
 	

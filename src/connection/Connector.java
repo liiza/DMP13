@@ -11,12 +11,14 @@ public interface Connector {
 	
 	public Packet listen(PacketType expected) throws IOException;
 	
+	boolean awaitConnection() throws IOException;
+	
 	public boolean connect(String ip) throws IOException;
 	
 	public boolean send(Packet packet) throws IOException;
 
 	public void disconnect() throws IOException;
 
-	boolean awaitConnection() throws IOException;
+	public String getAddress() throws IOException;
 	
 }
