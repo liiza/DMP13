@@ -35,7 +35,6 @@ public class ConnectServerActivity extends Activity {
 		//if everything goes ok, start game. Otherwise stay on page
 		Intent intent = new Intent(this, GameActivity.class);
 		intent.putExtra(MainActivity.SERVER, ip_address);
-		intent.putExtra(MainActivity.ALIAS_WORD, alias_word);
 		intent.putExtra(MainActivity.CLIENT, own_ip);
 		//who connects server, starts the game
 		intent.putExtra(MainActivity.TURN, true);

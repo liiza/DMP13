@@ -1,5 +1,9 @@
 package com.game.alias;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -29,7 +33,7 @@ public class GameActivity extends Activity {
 	   
 	    this.turn = intent.getBooleanExtra(MainActivity.TURN, true);
 	    this.guesser = intent.getBooleanExtra(MainActivity.GUESSER, false);
-	    this.alias_word = intent.getStringExtra(MainActivity.ALIAS_WORD);
+	    this.alias_word = getAliasWord();
 	    	    
 //		View button = findViewById(R.id.go_back_to_button);
 //		button.setVisibility(View.GONE);
@@ -89,6 +93,25 @@ public class GameActivity extends Activity {
 		return true;
 	}
 	/**
+	 * Returns a random word to be used in Alias game
+	 * @return
+	 */
+	private String getAliasWord(){
+		Random rand = new Random();
+		int index = rand.nextInt(10);
+		String[] words = {"dress",
+				"fang", 
+				"field",
+				"flag",
+				"flower",
+				"fog",
+				"game",
+				"heat",
+				"hill",
+				"home"};
+		return words[index];
+	}
+	/**
 	 * Called when the game is restarted. The roles are automatically switched.
 	 */
 	public void restartGame(View view){
@@ -96,11 +119,12 @@ public class GameActivity extends Activity {
 		
 		View button2 = findViewById(R.id.start_new_game_button);
 		button2.setVisibility(View.GONE);
+		this.alias_word = getAliasWord();
 		
 		//switch roles
 		this.guesser = !this.guesser;
 		
-		//if the player is not quesser he starts the game by giving first hint
+		//if the player is not guesser he starts the game by giving first hint
 	    if (!this.guesser) {
 	    	this.turn = true;
 	    	String message = "Your turn to give hints. " + 
