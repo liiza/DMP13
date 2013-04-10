@@ -30,7 +30,13 @@ public class GameActivity extends Activity {
 	    this.turn = intent.getBooleanExtra(MainActivity.TURN, true);
 	    this.guesser = intent.getBooleanExtra(MainActivity.GUESSER, false);
 	    this.alias_word = intent.getStringExtra(MainActivity.ALIAS_WORD);
-	    
+	    	    
+//		View button = findViewById(R.id.go_back_to_button);
+//		button.setVisibility(View.GONE);
+
+		View button2 = findViewById(R.id.start_new_game_button);
+		button2.setVisibility(View.GONE);
+		
 	    //if the player is not quesser he starts the game by giving first hint
 	    if (!this.guesser) {
 	    	this.opponent_ip = intent.getStringExtra(MainActivity.SERVER);
@@ -82,7 +88,61 @@ public class GameActivity extends Activity {
 		getMenuInflater().inflate(R.menu.activity_game, menu);
 		return true;
 	}
-	
+	/**
+	 * Called when the game is restarted. The roles are automatically switched.
+	 */
+	public void restartGame(View view){
+		//TODO heppu| send a message to the other player that he must also restart the game
+		
+		View button2 = findViewById(R.id.start_new_game_button);
+		button2.setVisibility(View.GONE);
+		
+		//switch roles
+		this.guesser = !this.guesser;
+		
+		//if the player is not quesser he starts the game by giving first hint
+	    if (!this.guesser) {
+	    	this.turn = true;
+	    	String message = "Your turn to give hints. " + 
+					"The word is " +
+					this.alias_word +
+					". Give the first hint.";
+			    
+			TextView textfield = (TextView) findViewById(R.id.server_connected);
+		    textfield.setTextSize(20);
+		    textfield.setText(message);
+		    //hide button and the guess text field
+			View b = findViewById(R.id.guess_button);
+			b.setVisibility(View.GONE);
+			View t = findViewById(R.id.guess);
+			t.setVisibility(View.GONE);
+		    //hide button and the hint text field
+			View b2 = findViewById(R.id.hint_button);
+			b2.setVisibility(View.VISIBLE);
+			View t2 = findViewById(R.id.hint);
+			t2.setVisibility(View.VISIBLE);
+	    }
+	    
+	    //if the person is the guesser he must wait for the first hint
+	    else {
+	    	this.turn = false;
+	    	String message = "Your turn to guess. Wait for the first hint.";
+			    
+			TextView textfield = (TextView) findViewById(R.id.server_connected);
+		    textfield.setTextSize(20);
+		    textfield.setText(message);
+		    //hide button and the hint text field
+			View b = findViewById(R.id.hint_button);
+			b.setVisibility(View.GONE);
+			View t = findViewById(R.id.hint);
+			t.setVisibility(View.GONE);
+		    //hide button and the guess text field
+			View b2 = findViewById(R.id.guess_button);
+			b2.setVisibility(View.GONE);
+			View t2 = findViewById(R.id.guess);
+			t2.setVisibility(View.GONE);
+	    }
+	}
 	/**
 	 * For the player who is trying to guess the word.
 	 * Called from socket when user receives the hint.
@@ -105,22 +165,26 @@ public class GameActivity extends Activity {
 	 * @param view
 	 */
 	public void sendGuess(View view){
-		//TODO heppu| send hint to opponent
+		//TODO heppu| send guess to opponent
 		EditText user_input = (EditText) findViewById(R.id.guess);
 		String guess = user_input.getText().toString();
 		//change turn 
 		this.turn = false;
 		if (guess.equals(this.alias_word)) {
-			String message = "Correct !! You are master of the universe";
+			String message = "Correct !! You are master of the universe.";
 			TextView textfield = (TextView) findViewById(R.id.server_connected);
 			textfield.setText(message);
+//			View button = findViewById(R.id.go_back_to_button);
+//			button.setVisibility(View.VISIBLE);
+			View button2 = findViewById(R.id.start_new_game_button);
+			button2.setVisibility(View.VISIBLE);
+			//TODO Send message to other player that the game has ended
 		}
 		else {
 			String message = "Your guess wasn't correct. Please wait for next hint.";
 			TextView textfield = (TextView) findViewById(R.id.server_connected);
 			textfield.setText(message);
 		}
-		
 
 		//hide button and the hint text field
 		View b = findViewById(R.id.guess_button);
@@ -166,6 +230,9 @@ public class GameActivity extends Activity {
 		t.setVisibility(View.VISIBLE);
 	}
 
+	/**
+	 * This just for the dummy game version
+	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 	    // Handle item selection
@@ -176,9 +243,9 @@ public class GameActivity extends Activity {
 	        case R.id.dummy_hint:
 	        	receiveHint();
 	            return true;	            
-	           
 	        default:
 	            return super.onOptionsItemSelected(item);
 	    }
 	}
+	
 }

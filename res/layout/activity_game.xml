@@ -4,35 +4,56 @@
     android:layout_height="match_parent"
     tools:context=".GameActivity" >
 
-	<TextView android:id="@+id/server_connected"
+    <TextView
+        android:id="@+id/server_connected"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true" />
-	
-    <EditText android:id="@+id/hint"
+
+    <EditText
+        android:id="@+id/hint"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="@string/edit_hint" 
-        android:layout_below="@+id/server_connected"/>
-    
-    <Button android:id="@+id/hint_button"
+        android:layout_below="@+id/server_connected"
+        android:hint="@string/edit_hint" />
+
+    <Button
+        android:id="@+id/hint_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/send_hint" 
-        android:onClick="sendHint" 
-        android:layout_below="@+id/hint"/>
-    
-    <EditText android:id="@+id/guess"
+        android:layout_below="@+id/hint"
+        android:onClick="sendHint"
+        android:text="@string/send_hint" />
+
+    <EditText
+        android:id="@+id/guess"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="@string/edit_guess" 
-        android:layout_below="@+id/server_connected"/>
-    
-    <Button android:id="@+id/guess_button"
+        android:layout_below="@+id/server_connected"
+        android:hint="@string/edit_guess" />
+
+    <Button
+        android:id="@+id/guess_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/send_guess" 
-        android:onClick="sendGuess" 
-        android:layout_below="@+id/guess"/>
+        android:layout_below="@+id/guess"
+        android:onClick="sendGuess"
+        android:text="@string/send_guess" />
+
+    <Button
+        android:id="@+id/start_new_game_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/server_connected"
+        android:onClick="restartGame"
+        android:text="@string/start_new_game" />
+
+<!--     <Button -->
+<!--         android:id="@+id/go_back_to_button" -->
+<!--         android:layout_width="wrap_content" -->
+<!--         android:layout_height="wrap_content" -->
+<!--         android:layout_below="@+id/start_new_game_button" -->
+<!--         android:onClick="sendHint" -->
+<!--         android:text="@string/go_back_to" /> -->
 
 </RelativeLayout>
