@@ -34,7 +34,7 @@ public class DummyConnector implements Connector {
 	@Override
 	public Packet listen(PacketType expected) {
 		long time = System.currentTimeMillis();
-		while(time - System.currentTimeMillis() < 1000){
+		while(System.currentTimeMillis() - time  < 1000){
 			// WAITING
 		}
 		switch(expected){
@@ -66,7 +66,7 @@ public class DummyConnector implements Connector {
 		if(connected)
 			return false;
 		long time = System.currentTimeMillis();
-		while(time - System.currentTimeMillis() < 1000){
+		while(System.currentTimeMillis() - time  < 1000){
 			// WAITING
 		}
 		connected = true;
@@ -78,7 +78,7 @@ public class DummyConnector implements Connector {
 		if(!connected)
 			return false;
 		long time = System.currentTimeMillis();
-		while(time - System.currentTimeMillis() < 1000){
+		while(System.currentTimeMillis() - time  < 1000){
 			// WAITING
 		}
 		
