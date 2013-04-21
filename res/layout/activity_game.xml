@@ -2,6 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
     tools:context=".GameActivity" >
 
     <TextView
@@ -47,6 +49,8 @@
         android:layout_below="@+id/server_connected"
         android:onClick="restartGame"
         android:text="@string/start_new_game" />
+    
+    
 
 <!--     <Button -->
 <!--         android:id="@+id/go_back_to_button" -->

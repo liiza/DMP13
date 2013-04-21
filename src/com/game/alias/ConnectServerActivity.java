@@ -12,10 +12,10 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 
 public class ConnectServerActivity extends Activity {
 
-	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -25,7 +25,7 @@ public class ConnectServerActivity extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.activity_connect_server, menu);
+		//getMenuInflater().inflate(R.menu.activity_connect_server, menu);
 		return true;
 	}
 
@@ -35,6 +35,12 @@ public class ConnectServerActivity extends Activity {
 		String ip_address = user_input.getText().toString();
 		String alias_word = "kakkulapio";
 		String own_ip = MainActivity.getOwnIp();
+	    RadioButton normalButton = (RadioButton) findViewById(R.id.radio0);
+	    RadioButton limitedtButton = (RadioButton) findViewById(R.id.radio1);
+	    String gametype = GameActivity.NORMAL;
+	    if (limitedtButton.isChecked()){
+	    	gametype = GameActivity.LIMITED;
+	    }
 		
 		try {
 			Connector.INSTANCE.connect(ip_address);
@@ -57,7 +63,8 @@ public class ConnectServerActivity extends Activity {
 		intent.putExtra(MainActivity.TURN, true);
 		//who connects server is the person who knows the word
 		intent.putExtra(MainActivity.GUESSER, false);
-		
+		//game type
+		intent.putExtra(MainActivity.GAMETYPE, gametype);
 		startActivity(intent);	
 		return true;
 	}

@@ -9,8 +9,9 @@
     <string name="title_activity_connect_server">ConnectServerActivity</string>
     <string name="title_activity_start_server">StartServerActivity</string>
     <string name="main_page">Open menu from menu button to connect server or start new server</string>
+    
     <!-- Connect server view -->
-    <string name="connect_server_ins"> Type server ip-address here which you want to connect</string>
+    <string name="connect_server_ins"> Type server ip-address and select the game type. </string>
     <string name="edit_message"> server ip-address e.g  82.131.29.171 </string>
     <string name="server_status_message"> Server Status </string>
     <string name="server_ip_message"> Server IP </string>
@@ -20,8 +21,12 @@
     <string name="start_server_text">Start Server</string>
     <string name="word_label">Your word is</string>
     <string name="dialog_connected">Connected to a client</string>
-     <string name="ok">Ok</string>
-
+    <string name="limited">Limited</string>
+    <string name="normal">Normal</string>
+    <string name="ok">Ok</string>
+    <string name="game_type">Game type</string>
+    
+    
     <!-- Game view -->
     <string name="send_hint">Send hint</string>
     <string name="edit_hint">Type a hint here</string>    

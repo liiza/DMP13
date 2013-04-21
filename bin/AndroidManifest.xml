@@ -7,11 +7,17 @@
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="17" />
-   
-	<uses-permission android:name="android.permission.INTERNET"></uses-permission>
+
+    <uses-permission android:name="android.permission.INTERNET" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.SEND_SMS" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.RECEIVE_SMS" >
+    </uses-permission>
+
     <application
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@drawable/word"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
@@ -27,7 +33,7 @@
             android:name="com.game.alias.ConnectServerActivity"
             android:label="@string/title_activity_connect_server" >
         </activity>
-         <activity
+        <activity
             android:name="com.game.alias.StartServerActivity"
             android:label="@string/title_activity_start_server" >
         </activity>

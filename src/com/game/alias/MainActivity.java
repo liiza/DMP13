@@ -22,12 +22,13 @@ public class MainActivity extends ListActivity {
 	public final static String CLIENT = "OWN_IP";
 	public final static String TURN = "TURN";
 	public final static String GUESSER = "GUESSER";
+	public static String GAMETYPE = "GAMETYPE";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		//setContentView(R.layout.activity_main);
-		String[] elements = { "Connect Server", "Start Server", "Quit" };
+		String[] elements = { "Connect Server", "Start Server" };
 
 		// Create an ArrayAdapter
 		ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,
