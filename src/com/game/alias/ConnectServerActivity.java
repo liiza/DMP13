@@ -8,7 +8,9 @@ import connection.Packet;
 import connection.PacketType;
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -16,6 +18,8 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 
 public class ConnectServerActivity extends Activity {
+
+private ProgressDialog progressDialog;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +35,31 @@ public class ConnectServerActivity extends Activity {
 	}
 
 	public boolean sendIp(View view){
+		//show loading dialog
+		progressDialog = ProgressDialog.show(ConnectServerActivity.this, "", "Loading...");
+		new Thread() {
+
+			public void run() {
+
+			try{
+
+			sleep(10000);
+
+			} catch (Exception e) {
+
+			Log.e("tag", e.getMessage());
+
+			}
+
+			// dismiss the progress dialog
+
+			progressDialog.dismiss();
+
+			}
+
+			}.start();
+
+        
 		//Do something for the ip
 		EditText user_input = (EditText) findViewById(R.id.edit_message);	
 		String ip_address = user_input.getText().toString();
@@ -44,8 +73,6 @@ public class ConnectServerActivity extends Activity {
 	    }
 		
 		
-		
-		
 		//if everything goes ok, start game. Otherwise stay on page
 		Intent intent = new Intent(this, GameActivity.class);
 		intent.putExtra(MainActivity.SERVER, ip_address);
@@ -57,6 +84,7 @@ public class ConnectServerActivity extends Activity {
 		//game type
 		intent.putExtra(MainActivity.GAMETYPE, gametype);
 		startActivity(intent);	
+		
 		return true;
 	}
 }
