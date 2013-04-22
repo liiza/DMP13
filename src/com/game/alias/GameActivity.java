@@ -35,7 +35,9 @@ public class GameActivity extends Activity {
 	// gametype
 	private String gametype;
 	
-	private List guesses = new ArrayList();
+	private List<String> guesses = new ArrayList<String>();
+	
+	private Game game;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +50,10 @@ public class GameActivity extends Activity {
 		this.turn = intent.getBooleanExtra(MainActivity.TURN, true);
 		this.guesser = intent.getBooleanExtra(MainActivity.GUESSER, false);
 		this.gametype = intent.getStringExtra(MainActivity.GAMETYPE);
-		this.alias_word = "kakkulapio"; // getAliasWord();
+		 // getAliasWord();
+		
+		this.game = new Game();
+		this.alias_word = this.game.getWord();
 
 		View button2 = findViewById(R.id.start_new_game_button);
 		button2.setVisibility(View.GONE);
@@ -57,11 +62,11 @@ public class GameActivity extends Activity {
 		if (!this.guesser) {
 			this.opponent_ip = intent.getStringExtra(MainActivity.SERVER);
 			this.own_ip = intent.getStringExtra(MainActivity.CLIENT);
-
+			
 			String message = "You sent game request to server "
 					+ this.opponent_ip + " The word is " + this.alias_word
 					+ ". Give the first hint.";
-
+			
 			TextView textfield = (TextView) findViewById(R.id.server_connected);
 			textfield.setTextSize(20);
 			textfield.setText(message);
@@ -70,15 +75,18 @@ public class GameActivity extends Activity {
 			b.setVisibility(View.GONE);
 			View t = findViewById(R.id.guess);
 			t.setVisibility(View.GONE);
+			
+			this.game.sendStart(opponent_ip);
 		}
 
 		// if the person is the guesser he must wait for the first hint
 		else {
 			this.opponent_ip = intent.getStringExtra(MainActivity.CLIENT);
 			this.own_ip = intent.getStringExtra(MainActivity.SERVER);
+			
 			String message = "You started a server with ip: " + this.own_ip
 					+ " Share your ip with someone so he can join your server.";
-
+			
 			TextView textfield = (TextView) findViewById(R.id.server_connected);
 			textfield.setTextSize(20);
 			textfield.setText(message);
@@ -92,6 +100,9 @@ public class GameActivity extends Activity {
 			b2.setVisibility(View.GONE);
 			View t2 = findViewById(R.id.guess);
 			t2.setVisibility(View.GONE);
+			
+			this.game.receiveStart();
+			receiveHint();
 		}
 	}
 
@@ -125,11 +136,7 @@ public class GameActivity extends Activity {
 		this.alias_word = getAliasWord();
 		this.guesses.clear();
 
-		try {
-			Connector.INSTANCE.send(new Packet(PacketType.RESTART, alias_word));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		
 
 		// switch roles
 		this.guesser = !this.guesser;
@@ -183,8 +190,7 @@ public class GameActivity extends Activity {
 	public void receiveHint() {
 		// TODO heppu| how do we get here?
 		this.turn = true;
-		this.alias_word = "kakkulapio";
-		String message = "The hint is: It is something you use for eating.";
+		String message = "The hint is: " + this.game.receiveHint();
 		TextView textfield = (TextView) findViewById(R.id.server_connected);
 		textfield.setText(message);
 		View b = findViewById(R.id.guess_button);
@@ -206,12 +212,7 @@ public class GameActivity extends Activity {
 		String guess = user_input.getText().toString();
 		this.guesses.add(guess);
 
-		try {
-			Connector.INSTANCE.send(new Packet(PacketType.GUESS, guess));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
+		this.game.sendGuess(guess);
 		// change turn
 		this.turn = false;
 		if (guess.equals(this.alias_word)) {
@@ -234,6 +235,8 @@ public class GameActivity extends Activity {
 		b.setVisibility(View.GONE);
 		View t = findViewById(R.id.guess);
 		t.setVisibility(View.GONE);
+		
+		receiveHint();
 	}
 
 	/**
@@ -247,16 +250,13 @@ public class GameActivity extends Activity {
 		EditText user_input = (EditText) findViewById(R.id.hint);
 		String hint = user_input.getText().toString();
 
-		try {
-			Connector.INSTANCE.send(new Packet(PacketType.HINT, hint));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 		if (hint.length() > 10 && this.gametype.equals(GameActivity.LIMITED)) {
 			String message = "Your hint is too long for limited mode. Give a new hint";
 			TextView textfield = (TextView) findViewById(R.id.server_connected);
 			textfield.setText(message);
 		} else {
+			
+			
 			// change turn and change text
 			this.turn = false;
 			String message = "Your hint was sent. Now wait for the other player to guess the word.";
@@ -267,6 +267,8 @@ public class GameActivity extends Activity {
 			b.setVisibility(View.GONE);
 			View t = findViewById(R.id.hint);
 			t.setVisibility(View.GONE);
+			this.game.sendHint(hint);
+			receiveGuess();
 		}
 	}
 
@@ -276,8 +278,9 @@ public class GameActivity extends Activity {
 	 */
 	public void receiveGuess() {
 		// TODO heppu| how do we get here?
+		String guess = this.game.receiveGuess();
 		this.turn = true;
-		String message = "The guess was haarukka. It was wrong. Give a new hint";
+		String message = "The guess was: " + guess + " It was wrong. Give a new hint";
 		TextView textfield = (TextView) findViewById(R.id.server_connected);
 		textfield.setText(message);
 		View b = findViewById(R.id.hint_button);

@@ -1,6 +1,7 @@
 package com.game.alias;
 
 import java.io.IOException;
+import java.net.SocketException;
 
 import connection.Connector;
 import connection.Packet;
@@ -42,17 +43,7 @@ public class ConnectServerActivity extends Activity {
 	    	gametype = GameActivity.LIMITED;
 	    }
 		
-		try {
-			Connector.INSTANCE.connect(ip_address);
-			String ip = Connector.INSTANCE.listen(PacketType.CONNECT).getMessage();
-			if(!ip.equals(ip_address)){
-				//display error message, something went wrong
-			}
-			Connector.INSTANCE.send(new Packet(PacketType.START, alias_word));
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		
 		
 		
 		//if everything goes ok, start game. Otherwise stay on page
