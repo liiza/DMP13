@@ -16,34 +16,28 @@ public final class R {
     }
     public static final class id {
         public static final int connect_server=0x7f070000;
-        public static final int dummy_hint=0x7f070015;
-        public static final int dummy_reply=0x7f070014;
+        public static final int dummy_hint=0x7f07000f;
+        public static final int dummy_reply=0x7f07000e;
         public static final int edit_message=0x7f070001;
         public static final int game_type=0x7f070002;
         public static final int guess=0x7f070009;
         public static final int guess_button=0x7f07000a;
         public static final int hint=0x7f070007;
         public static final int hint_button=0x7f070008;
-        public static final int ip_label=0x7f07000f;
         public static final int listview=0x7f07000c;
-        public static final int menu_settings=0x7f070013;
+        public static final int menu_settings=0x7f07000d;
         public static final int radio0=0x7f070004;
         public static final int radio1=0x7f070005;
         public static final int radioGroup=0x7f070003;
         public static final int server_connected=0x7f070006;
-        public static final int server_ip=0x7f070010;
-        public static final int server_status=0x7f07000e;
         public static final int start_new_game_button=0x7f07000b;
-        public static final int start_server=0x7f070016;
-        public static final int status_label=0x7f07000d;
-        public static final int word=0x7f070012;
-        public static final int word_label=0x7f070011;
+        public static final int start_server=0x7f070011;
+        public static final int title=0x7f070010;
     }
     public static final class layout {
         public static final int activity_connect_server=0x7f030000;
         public static final int activity_game=0x7f030001;
         public static final int activity_main=0x7f030002;
-        public static final int activity_start_server=0x7f030003;
     }
     public static final class menu {
         public static final int activity_connect_server=0x7f060000;

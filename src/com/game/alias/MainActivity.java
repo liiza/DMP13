@@ -20,6 +20,7 @@ import android.app.ListActivity;
 import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -53,8 +54,10 @@ public class MainActivity extends ListActivity {
 		ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,
 				android.R.layout.simple_list_item_1, elements);
 		this.setListAdapter(arrayAdapter);
+	
 	}
 
+	   
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
 		Object o = this.getListAdapter().getItem(position);
