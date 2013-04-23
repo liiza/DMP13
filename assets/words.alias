@@ -1,0 +1,18 @@
+// keywordit erotetaan sanoista kaksoispisteellä (:)
+// peräkkäiset sanat tai keywordit erotetaan pilkulla (,)
+// samalla rivillä olevat sanat saavat jokainen kaikki sillä rivillä olevat keywordit
+// jos keywordin ympärillä on hakasulkeet ([ ]), se on absoluuttinen
+// sanat joilla on yksi tai useampi absoluuttinen keyword eivät tule valituiksi, jos kaikkia sen absoluuttisia keywordejä ei ole valittu
+// esimerkiksi vaikeusasteet ja kielet kannattaa määrittää absoluuttisiksi, jotteivat ne tule valituiksi jos käyttäjä ei niitä valitse
+// Ts. jos käyttäjä valitsee helpot sanat, ei muita vaikeusasteita käytetä tai jos käyttäjä valitsee kieleksi suomen, ei muun kielisiä sanoja käytetä
+
+[easy]:dog
+[easy],animal:cat
+[easy],animal:cat,lamb,chicken
+[hard]:communism
+// Sana ei välttämättä tarvitse keywordejä, mutta ainakin vaikeusaste kannattaa määrittää
+helicopter
+// Tämäkään ei ole virheellinen syntaksi, vaikka kaksoispiste on turha
+:bug
+[impossible]:phenomenology
+madness:sparta

@@ -20,15 +20,6 @@ public class Game {
 		this.word = word;
 	}
 
-	public Game(){
-		initWord();
-	}
-	
-	private void initWord(){
-		// TODO
-		word = "helicopter";
-	}
-
 	public boolean guess(String guess) {
 		boolean b = guess.equals(word);
 		this.guessed = b;
@@ -85,7 +76,6 @@ public class Game {
 	}
 	
 	public boolean sendRestart(){
-		initWord();
 		try {
 			Connector.INSTANCE.send(new Packet(PacketType.RESTART, word));
 			return true;

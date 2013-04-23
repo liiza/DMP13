@@ -2,8 +2,10 @@ package com.game.alias;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 import connection.Connector;
 import connection.Packet;
@@ -53,6 +55,7 @@ public class GameActivity extends Activity {
 		 // getAliasWord();
 		
 		this.game = new Game();
+		Set<String> words = MainActivity.getWordsForKeys(Arrays.asList("medium","finnish", "alcohol"));
 		this.alias_word = this.game.getWord();
 
 		View button2 = findViewById(R.id.start_new_game_button);
@@ -228,6 +231,7 @@ public class GameActivity extends Activity {
 			String message = "Your guess wasn't correct. Please wait for next hint.";
 			TextView textfield = (TextView) findViewById(R.id.server_connected);
 			textfield.setText(message);
+			receiveHint();
 		}
 
 		// hide button and the hint text field
@@ -236,7 +240,7 @@ public class GameActivity extends Activity {
 		View t = findViewById(R.id.guess);
 		t.setVisibility(View.GONE);
 		
-		receiveHint();
+		
 	}
 
 	/**

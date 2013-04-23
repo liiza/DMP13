@@ -1,7 +1,16 @@
 package com.game.alias;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import connection.Connector;
 
@@ -9,6 +18,8 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Intent;
+import android.content.res.AssetFileDescriptor;
+import android.content.res.AssetManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,10 +35,18 @@ public class MainActivity extends ListActivity {
 	public final static String GUESSER = "GUESSER";
 	public static String GAMETYPE = "GAMETYPE";
 
+	private final static Keyword NO_KEY = new Keyword("NO_KEY", false);
+
+	private static final Map<String, List<Keyword>> WORDS = new HashMap<String, List<Keyword>>();
+	private static final Set<String> ABSOLUTES = new HashSet<String>();
+	private static final Set<String> KEYWORDS = new HashSet<String>();
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		//setContentView(R.layout.activity_main);
+
+		readWords();
+		// setContentView(R.layout.activity_main);
 		String[] elements = { "Connect Server", "Start Server" };
 
 		// Create an ArrayAdapter
@@ -42,11 +61,10 @@ public class MainActivity extends ListActivity {
 		String element = o.toString();
 		if (element == "Connect Server") {
 			connectServer();
-		}
-		else if (element == "Start Server") {
+		} else if (element == "Start Server") {
 			startServer();
 		}
-		
+
 	}
 
 	@Override
@@ -55,8 +73,8 @@ public class MainActivity extends ListActivity {
 		getMenuInflater().inflate(R.menu.activity_main, menu);
 		return true;
 	}
-	
-	private boolean connectServer(){
+
+	private boolean connectServer() {
 		Intent intent = new Intent(this, ConnectServerActivity.class);
 		startActivity(intent);
 		return true;
@@ -96,5 +114,151 @@ public class MainActivity extends ListActivity {
 		default:
 			return super.onOptionsItemSelected(item);
 		}
+	}
+
+	private void readWords() {
+		AssetManager assetManager = getAssets();
+		try {
+			String[] files = assetManager.list("");
+			for (String fileName : files) {
+				if (fileName.endsWith(".alias")) {
+					InputStream in = assetManager.open(fileName);
+					BufferedReader reader = new BufferedReader(
+							new InputStreamReader(in, "UTF-8"));
+					String line;
+					while ((line = reader.readLine()) != null) {
+						
+						if(line.startsWith("//"))
+							continue;
+						
+						String[] split = line.split(":");
+
+						if (split.length == 0)
+							continue;
+
+						String words;
+						String[] keywords = split[0].split(",");
+						if (split.length == 1) {
+							words = split[0];
+
+							for (String word : words.split(",")) {
+								word = word.trim();
+								if (word.length() == 0)
+									continue;
+								if (!WORDS.keySet().contains(word))
+									WORDS.put(word, new ArrayList<Keyword>());
+							}
+						} else {
+							words = split[1];
+
+							for (String word : words.split(",")) {
+								word = word.trim();
+
+								if (word.length() == 0)
+									continue;
+
+								if (WORDS.keySet().contains(word)
+										&& WORDS.get(word).size() != 0)
+									continue;
+
+								WORDS.put(word, new ArrayList<Keyword>());
+
+								for (String keyword : keywords) {
+
+									keyword = keyword.trim();
+
+									boolean absolute = keyword.startsWith("[")
+											&& keyword.endsWith("]");
+									
+									if (absolute) {
+										keyword = keyword.substring(1,
+												keyword.length() - 1);
+										ABSOLUTES.add(keyword);
+									} 
+									Keyword key = new Keyword(keyword, false);
+									KEYWORDS.add(keyword);
+
+									if (keyword.length() == 0) {
+										continue;
+									}
+
+									WORDS.get(word).add(key);
+								}
+							}
+						}
+					}
+				}
+			}
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+	}
+
+	public static Set<String> getWordsForKeys(List<String> keywords) {
+		Set<String> selected = new HashSet<String>();
+
+		for (String word : WORDS.keySet()) {
+			boolean match = true;
+			
+			for (String absolute : ABSOLUTES) {
+				if(WORDS.get(word).contains(new Keyword(absolute, false)) && !keywords.contains(absolute)){
+					match = false;
+				}
+			}
+			
+			if(!match)
+				continue;
+			
+			for (String keyword : keywords) {
+				if (!WORDS.get(word).contains(new Keyword(keyword, false))) {
+					match = false;
+				}
+			}
+			
+			if(!match)
+				continue;
+			
+			selected.add(word);
+		}
+		return selected;
+	}
+
+	public static class Keyword {
+
+		private String key;
+		private boolean absolute;
+
+		public Keyword(String key, boolean absolute) {
+			this.key = key;
+			this.absolute = absolute;
+		}
+
+		@Override
+		public int hashCode() {
+			final int prime = 31;
+			int result = 1;
+			result = prime * result + ((key == null) ? 0 : key.hashCode());
+			return result;
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			Keyword other = (Keyword) obj;
+			if (key == null) {
+				if (other.key != null)
+					return false;
+			} else if (!key.equals(other.key))
+				return false;
+			return true;
+		}
+
 	}
 }
