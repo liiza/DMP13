@@ -55,7 +55,7 @@ public class GameActivity extends Activity {
 		 // getAliasWord();
 		
 		this.game = new Game();
-		Set<String> words = MainActivity.getWordsForKeys(Arrays.asList("medium","finnish", "alcohol"));
+		Set<String> words = MainActivity.getWordsForKeys(Arrays.asList("hard"));
 		this.alias_word = this.game.getWord();
 
 		View button2 = findViewById(R.id.start_new_game_button);

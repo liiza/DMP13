@@ -134,6 +134,21 @@ public class MainActivity extends ListActivity {
 						if(line.startsWith("//"))
 							continue;
 						
+						if(line.startsWith("/*")) {
+							while((line = reader.readLine()) != null && !line.endsWith("*/")){			
+							}
+							
+							if(line == null)
+								break;
+							
+							if(line.endsWith("*/"))
+								line = reader.readLine();
+							
+							if(line == null)
+								break;
+							
+						}
+						
 						String[] split = line.split(":");
 
 						if (split.length == 0)
@@ -208,6 +223,7 @@ public class MainActivity extends ListActivity {
 			for (String absolute : ABSOLUTES) {
 				if(WORDS.get(word).contains(new Keyword(absolute, false)) && !keywords.contains(absolute)){
 					match = false;
+					break;
 				}
 			}
 			
@@ -217,6 +233,7 @@ public class MainActivity extends ListActivity {
 			for (String keyword : keywords) {
 				if (!WORDS.get(word).contains(new Keyword(keyword, false))) {
 					match = false;
+					break;
 				}
 			}
 			
