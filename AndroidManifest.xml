@@ -10,6 +10,10 @@
 
     <uses-permission android:name="android.permission.INTERNET" >
     </uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" >
+    </uses-permission>
     <uses-permission android:name="android.permission.SEND_SMS" >
     </uses-permission>
     <uses-permission android:name="android.permission.RECEIVE_SMS" >
@@ -40,6 +44,14 @@
         <activity
             android:name="com.game.alias.GameActivity"
             android:label="@string/title_activity_game" >
+        </activity>
+        <activity
+            android:name="com.game.alias.ServerStartedActivity"
+            android:label="@string/title_activity_server_started" >
+        </activity>
+        <activity
+            android:name="com.game.alias.SendIPActivity"
+            android:label="@string/title_activity_send_ip" >
         </activity>
     </application>
 

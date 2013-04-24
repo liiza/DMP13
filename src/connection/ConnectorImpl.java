@@ -18,7 +18,7 @@ import android.util.Log;
 
 public class ConnectorImpl implements Connector {
 
-	public static final int SERVER_PORT = 70;
+	public static final int SERVER_PORT = 1024;
 	
 	ConnectorImpl(){};
 	

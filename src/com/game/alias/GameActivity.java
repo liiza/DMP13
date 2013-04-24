@@ -49,14 +49,19 @@ public class GameActivity extends Activity {
 		// init the game
 		Intent intent = getIntent();
 
-		this.turn = intent.getBooleanExtra(MainActivity.TURN, true);
-		this.guesser = intent.getBooleanExtra(MainActivity.GUESSER, false);
+		this.turn = intent.getBooleanExtra(ServerStartedActivity.TURN, true);
+		this.guesser = intent.getBooleanExtra(ServerStartedActivity.GUESSER, false);
 		this.gametype = intent.getStringExtra(MainActivity.GAMETYPE);
 		 // getAliasWord();
 		
 		this.game = new Game();
+		
+		// TODO avainsanat käyttäjältä, lista mahdollisista: MainActivity.KEYWORDS
 		Set<String> words = MainActivity.getWordsForKeys(Arrays.asList("hard"));
-		this.alias_word = this.game.getWord();
+		int index = new Random(System.currentTimeMillis()).nextInt(words.size() - 1);
+		
+		this.alias_word = words.toArray(new String[0])[index];
+		this.game.setWord(alias_word);
 
 		View button2 = findViewById(R.id.start_new_game_button);
 		button2.setVisibility(View.GONE);
@@ -108,6 +113,17 @@ public class GameActivity extends Activity {
 			receiveHint();
 		}
 	}
+	
+	@Override
+	protected void onPause(){
+		super.onPause();
+		try {
+			Connector.INSTANCE.disconnect();
+		} catch (IOException e) {
+
+		}
+		finish();
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -146,6 +162,7 @@ public class GameActivity extends Activity {
 
 		// if the player is not guesser he starts the game by giving first hint
 		if (!this.guesser) {
+			
 			this.turn = true;
 			String message = "Your turn to give hints. " + "The word is "
 					+ this.alias_word + ". Give the first hint.";
@@ -192,6 +209,7 @@ public class GameActivity extends Activity {
 	 */
 	public void receiveHint() {
 		// TODO heppu| how do we get here?
+		this.game.receiveHint();
 		this.turn = true;
 		String message = "The hint is: " + this.game.receiveHint();
 		TextView textfield = (TextView) findViewById(R.id.server_connected);

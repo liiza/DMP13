@@ -93,13 +93,13 @@ public class MainActivity extends ListActivity {
 	}
 
 	private boolean startServer() {
-		Intent intent = new Intent(this, GameActivity.class);
-		String own_ip_address = getOwnIp();
-		intent.putExtra(SERVER, own_ip_address);
-		// who starts server, must wait the other person to start the game
-		intent.putExtra(TURN, false);
-		// who starts server is the guesser
-		intent.putExtra(GUESSER, true);
+		Intent intent = new Intent(this, ServerStartedActivity.class);
+//		String own_ip_address = getOwnIp();s
+//		intent.putExtra(SERVER, own_ip_address);
+//		// who starts server, must wait the other person to start the game
+//		intent.putExtra(TURN, false);
+//		// who starts server is the guesser
+//		intent.putExtra(GUESSER, true);
 		startActivity(intent);
 		return true;
 	}

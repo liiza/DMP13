@@ -1,0 +1,68 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".ServerStartedActivity" >
+
+    <TextView
+        android:id="@+id/server_started_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="27dp"
+        android:text="@string/server_started_message"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/show_ip_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/server_started_message"
+        android:layout_centerHorizontal="true"
+        android:text="Large Text"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <ProgressBar
+        android:id="@+id/listening_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/server_started_message"
+        android:layout_marginRight="16dp"
+        android:layout_toLeftOf="@+id/server_started_message" />
+
+    <Button
+        android:id="@+id/send_ip_button"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/show_ip_text"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="18dp"
+        android:onClick="sendIp"
+        android:text="@string/send_ip_message" />
+
+    <Button
+        android:id="@+id/start_game_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/send_ip_button"
+        android:layout_centerHorizontal="true"
+        android:onClick="startGame"
+        android:text="@string/start_game_message" />
+
+    <Button
+        android:id="@+id/disconnect_button"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/show_ip_text"
+        android:onClick="disconnect"
+        android:text="@string/disconnect_message" />
+
+</RelativeLayout>
