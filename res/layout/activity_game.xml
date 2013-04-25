@@ -43,16 +43,6 @@
         android:layout_below="@+id/server_connected"
         android:onClick="restartGame"
         android:text="@string/start_new_game" />
-    
-    
-
-<!--     <Button -->
-<!--         android:id="@+id/go_back_to_button" -->
-<!--         android:layout_width="wrap_content" -->
-<!--         android:layout_height="wrap_content" -->
-<!--         android:layout_below="@+id/start_new_game_button" -->
-<!--         android:onClick="sendHint" -->
-<!--         android:text="@string/go_back_to" /> -->
 
     <ProgressBar
         android:id="@+id/waiting_indicator"
@@ -71,5 +61,7 @@
         android:layout_marginTop="16dp"
         android:text="Dummy"
         android:textAppearance="?android:attr/textAppearanceLarge" />
+
+
 
 </RelativeLayout>
