@@ -6,12 +6,6 @@
     android:paddingRight="16dp"
     tools:context=".GameActivity" >
 
-    <TextView
-        android:id="@+id/server_connected"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true" />
-
     <EditText
         android:id="@+id/hint"
         android:layout_width="wrap_content"
@@ -59,5 +53,23 @@
 <!--         android:layout_below="@+id/start_new_game_button" -->
 <!--         android:onClick="sendHint" -->
 <!--         android:text="@string/go_back_to" /> -->
+
+    <ProgressBar
+        android:id="@+id/waiting_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/hint"
+        android:layout_below="@+id/hint" />
+
+    <TextView
+        android:id="@+id/server_connected"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/hint"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/start_new_game_button"
+        android:layout_marginTop="16dp"
+        android:text="Dummy"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
 </RelativeLayout>
