@@ -51,7 +51,7 @@ public class DummyConnector implements Connector {
 		case RESTART:
 			return new Packet(PacketType.RESTART,"");
 		case START:
-			return new Packet(PacketType.START,"");
+			return new Packet(PacketType.START,"derp");
 		case INCORRECT:
 			return new Packet(PacketType.INCORRECT,"");
 		case STOP:

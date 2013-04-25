@@ -3,6 +3,7 @@ package com.game.alias;
 import java.io.IOException;
 
 import connection.Connector;
+import connection.PacketType;
 import android.os.Bundle;
 import android.os.Handler;
 import android.app.Activity;
@@ -57,6 +58,7 @@ public class ServerStartedActivity extends Activity {
 	protected void onStop() {
 		super.onStop();
 		listen = false;
+		listenStart = false;
 		disconnect(null);
 	}
 	
@@ -64,11 +66,14 @@ public class ServerStartedActivity extends Activity {
 	protected void onPause() {
 		super.onPause();
 		listen = false;
+		listenStart = false;
 		disconnect(null);
 	}
 	
+
 	public final static String TURN = "TURN";
 	public final static String GUESSER = "GUESSER";
+	public final static String WORD = "WORD";
 
 	public boolean startGame(View view) {
 		Intent intent = new Intent(this, GameActivity.class);
@@ -76,11 +81,12 @@ public class ServerStartedActivity extends Activity {
 		intent.putExtra(TURN, false);
 		// who starts server is the guesser
 		intent.putExtra(GUESSER, true);
+		intent.putExtra(WORD, receivedWord);
 		startActivity(intent);
 		finish();
 		return true;
 	}
-
+	
 	public boolean disconnect(View view) {
 		try {
 			Connector.INSTANCE.disconnect();
@@ -124,15 +130,44 @@ public class ServerStartedActivity extends Activity {
 
 	private void updateUI() {
 		TextView messageField = (TextView) findViewById(R.id.server_started_message);
-		messageField.setText("Connected!");
-		View startGameButton = findViewById(R.id.start_game_button);
-		startGameButton.setVisibility(View.VISIBLE);
+		messageField.setText("Connected! Waiting for start.");
 		View listeningIndicator = (ProgressBar) findViewById(R.id.listening_indicator);
 		listeningIndicator.setVisibility(View.GONE);
 		View disconnectButton = findViewById(R.id.disconnect_button);
 		disconnectButton.setVisibility(View.VISIBLE);
+		
+		Thread startThread = new Thread(new StartReceiverThread());
+		listenStart = true;
+		startThread.start();
+	}
+	
+	private void updateStart() {
+		TextView messageField = (TextView) findViewById(R.id.server_started_message);
+		messageField.setText("Game is ready to start.");
+		View startGameButton = findViewById(R.id.start_game_button);
+		startGameButton.setVisibility(View.VISIBLE);
 	}
 
+	private boolean listenStart;
+	private String receivedWord;
+
+	private class StartReceiverThread implements Runnable {
+
+		@Override
+		public void run() {
+
+			while (listenStart)
+				try {
+					receivedWord = Connector.INSTANCE.listen(PacketType.START)
+							.getMessage();
+					handler.post(updateStartRunnable);
+					listenStart = false;
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+		}
+	}
+	
 	private final Handler handler = new Handler();
 
 	private class ConnectionListenerThread implements Runnable {
@@ -155,6 +190,13 @@ public class ServerStartedActivity extends Activity {
 		public void run() {
 			updateUI();
 		}
+	};
+	
+	final Runnable updateStartRunnable = new Runnable(){
+		public void run() {
+			updateStart();
+		}
+
 	};
 
 }
