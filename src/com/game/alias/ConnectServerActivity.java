@@ -7,6 +7,7 @@ import connection.Connector;
 import connection.Packet;
 import connection.PacketType;
 import android.os.Bundle;
+import android.os.Handler;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -19,7 +20,7 @@ import android.widget.RadioButton;
 
 public class ConnectServerActivity extends Activity {
 
-private ProgressDialog progressDialog;
+	private ProgressDialog progressDialog;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -30,61 +31,71 @@ private ProgressDialog progressDialog;
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		//getMenuInflater().inflate(R.menu.activity_connect_server, menu);
+		// getMenuInflater().inflate(R.menu.activity_connect_server, menu);
 		return true;
 	}
 
-	public boolean sendIp(View view){
-		//show loading dialog
-		progressDialog = ProgressDialog.show(ConnectServerActivity.this, "", "Loading...");
-		new Thread() {
-
-			public void run() {
-
-			try{
-
-			sleep(10000);
-
-			} catch (Exception e) {
-
-			Log.e("tag", e.getMessage());
-
-			}
-
-			// dismiss the progress dialog
-
-			progressDialog.dismiss();
-
-			}
-
-			}.start();
-
-        
-		//Do something for the ip
-		EditText user_input = (EditText) findViewById(R.id.edit_message);	
+	public boolean sendIp(View view) throws IOException {
+		// show loading dialog
+		EditText user_input = (EditText) findViewById(R.id.edit_message);
 		String ip_address = user_input.getText().toString();
+		Connector.INSTANCE.connect(ip_address);
+		
+		progressDialog = ProgressDialog.show(ConnectServerActivity.this, "",
+				"Loading...");
+		
+		listen = true;
+		Thread t = new Thread(new ConnectionListenerThread());
+		t.start();
+		
+		return true;
+	}
+
+	private final Handler handler = new Handler();
+	private boolean listen = true;
+
+	private class ConnectionListenerThread implements Runnable {
+
+		@Override
+		public void run() {
+			while (listen)
+				try {
+					Connector.INSTANCE.listen(PacketType.CONNECT).getMessage();
+					handler.post(updateRunnable);
+					listen = false;
+				} catch (IOException e) {
+
+				}
+		}
+
+	}
+
+	private void update() {
+		progressDialog.dismiss();
+		// Do something for the ip
 		String alias_word = "kakkulapio";
 		String own_ip = MainActivity.getOwnIp();
-	    RadioButton normalButton = (RadioButton) findViewById(R.id.radio0);
-	    RadioButton limitedtButton = (RadioButton) findViewById(R.id.radio1);
-	    String gametype = GameActivity.NORMAL;
-	    if (limitedtButton.isChecked()){
-	    	gametype = GameActivity.LIMITED;
-	    }
-		
-		
-		//if everything goes ok, start game. Otherwise stay on page
+		RadioButton normalButton = (RadioButton) findViewById(R.id.radio0);
+		RadioButton limitedtButton = (RadioButton) findViewById(R.id.radio1);
+		String gametype = GameActivity.NORMAL;
+		if (limitedtButton.isChecked()) {
+			gametype = GameActivity.LIMITED;
+		}
+
+		// if everything goes ok, start game. Otherwise stay on page
 		Intent intent = new Intent(this, GameActivity.class);
-		intent.putExtra(MainActivity.SERVER, ip_address);
-		intent.putExtra(MainActivity.CLIENT, own_ip);
-		//who connects server, starts the game
+		// who connects server, starts the game
 		intent.putExtra(MainActivity.TURN, true);
-		//who connects server is the person who knows the word
+		// who connects server is the person who knows the word
 		intent.putExtra(MainActivity.GUESSER, false);
-		//game type
+		// game type
 		intent.putExtra(MainActivity.GAMETYPE, gametype);
-		startActivity(intent);	
-		
-		return true;
+		startActivity(intent);
 	}
+
+	final Runnable updateRunnable = new Runnable() {
+		public void run() {
+			update();
+		}
+	};
 }

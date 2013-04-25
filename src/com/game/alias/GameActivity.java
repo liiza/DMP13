@@ -69,7 +69,7 @@ public class GameActivity extends Activity {
 
 		View button2 = findViewById(R.id.start_new_game_button);
 		button2.setVisibility(View.GONE);
-		
+
 		View waitingIndicator = findViewById(R.id.waiting_indicator);
 		waitingIndicator.setVisibility(View.GONE);
 
@@ -90,20 +90,24 @@ public class GameActivity extends Activity {
 			b.setVisibility(View.GONE);
 			View t = findViewById(R.id.guess);
 			t.setVisibility(View.GONE);
-
-			this.game.sendStart(opponent_ip);
 		}
 
 		// if the person is the guesser he must wait for the first hint
 		else {
+			
+			this.alias_word = intent.getStringExtra(ServerStartedActivity.WORD);
+			this.game.setWord(alias_word);
+			
 			this.opponent_ip = intent.getStringExtra(MainActivity.CLIENT);
 			this.own_ip = intent.getStringExtra(MainActivity.SERVER);
 
 			waitForHint("Waiting for hint.");
 		}
 	}
+
 	
-	private void waitForHint(String message){
+
+	private void waitForHint(String message) {
 		TextView textfield = (TextView) findViewById(R.id.server_connected);
 		textfield.setText(message);
 		// hide button and the hint text field
@@ -116,19 +120,19 @@ public class GameActivity extends Activity {
 		b2.setVisibility(View.GONE);
 		View t2 = findViewById(R.id.guess);
 		t2.setVisibility(View.GONE);
-		
+
 		View waitingIndicator = findViewById(R.id.waiting_indicator);
 		waitingIndicator.setVisibility(View.VISIBLE);
-		
+
 		Thread hintThread = new Thread(new HintReceiverThread());
 		listenHint = true;
 		hintThread.start();
 	}
-	
-	private void waitForGuess(String message){
+
+	private void waitForGuess(String message) {
 		View waitingIndicator = findViewById(R.id.waiting_indicator);
 		waitingIndicator.setVisibility(View.VISIBLE);
-		
+
 		TextView textfield = (TextView) findViewById(R.id.server_connected);
 		textfield.setText(message);
 		// hide button and the hint text field
@@ -136,7 +140,7 @@ public class GameActivity extends Activity {
 		b.setVisibility(View.GONE);
 		View t = findViewById(R.id.hint);
 		t.setVisibility(View.GONE);
-		
+
 		Thread guessThread = new Thread(new GuessReceiverThread());
 		listenGuess = true;
 		guessThread.start();
@@ -282,11 +286,9 @@ public class GameActivity extends Activity {
 
 			// change turn and change text
 			this.turn = false;
-			long time = System.currentTimeMillis();
 			this.game.sendHint(hint);
-			time = System.currentTimeMillis() -time;
 			waitForGuess("Your hint was sent. Now wait for the other player to guess the word.");
-			
+
 		}
 	}
 
@@ -297,7 +299,7 @@ public class GameActivity extends Activity {
 	public void receiveGuess() {
 		// TODO heppu| how do we get here?
 		String guess = this.game.receiveGuess();
-		
+
 	}
 
 	/**
@@ -364,9 +366,10 @@ public class GameActivity extends Activity {
 	private void updateGuess() {
 		View waitingIndicator = findViewById(R.id.waiting_indicator);
 		waitingIndicator.setVisibility(View.GONE);
-		
+
 		this.turn = true;
-		String message = "The guess was: " + receivedGuess	+ " It was wrong. Give a new hint";
+		String message = "The guess was: " + receivedGuess
+				+ " It was wrong. Give a new hint";
 		TextView textfield = (TextView) findViewById(R.id.server_connected);
 		textfield.setText(message);
 		View b = findViewById(R.id.hint_button);
@@ -378,7 +381,7 @@ public class GameActivity extends Activity {
 	private void updateHint() {
 		View waitingIndicator = findViewById(R.id.waiting_indicator);
 		waitingIndicator.setVisibility(View.GONE);
-		
+
 		this.turn = true;
 		String message = "The hint is: " + receivedHint;
 		TextView textfield = (TextView) findViewById(R.id.server_connected);
@@ -399,7 +402,6 @@ public class GameActivity extends Activity {
 		public void run() {
 			updateHint();
 		}
-
 	};
 
 }
