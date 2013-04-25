@@ -46,7 +46,7 @@ public class ConnectorImpl implements Connector {
 	public boolean awaitConnection() throws IOException{
 		init();
 		
-		if(connected = true){
+		if(connected == true){
 			return false;
 		}
 		
@@ -59,7 +59,7 @@ public class ConnectorImpl implements Connector {
 	public boolean connect(String ip) throws IOException {
 		init();
 
-		if (connected = true)
+		if (connected == true)
 			return false;
 
 		InetAddress serverAddr = InetAddress.getByName(ip);
@@ -113,6 +113,7 @@ public class ConnectorImpl implements Connector {
 						if (!inetAddress.isLoopbackAddress()) {
 							this.address = inetAddress.getHostAddress()
 									.toString();
+							return;
 						}
 					}
 				}

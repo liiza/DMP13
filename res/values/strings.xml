@@ -6,8 +6,8 @@
     <string name="menu_settings">Settings</string>
     <string name="start_server">Start Server</string>
     <string name="connect_server">Connect Server</string>
-    <string name="title_activity_connect_server">ConnectServerActivity</string>
-    <string name="title_activity_start_server">StartServerActivity</string>
+    <string name="title_activity_connect_server">Connect Server</string>
+    <string name="title_activity_start_server">Start Server</string>
     <string name="main_page">Open menu from menu button to connect server or start new server</string>
 
     <!-- Connect server view -->
@@ -16,7 +16,7 @@
     <string name="server_status_message"> Server Status </string>
     <string name="server_ip_message"> Server IP </string>
     <string name="button_send">Connect</string>
-    <string name="title_activity_game">GameActivity</string>
+    <string name="title_activity_game">Alias</string>
     <string name="stop_server_text">Stop Server</string>
     <string name="start_server_text">Start Server</string>
     <string name="word_label">Your word is</string>
@@ -35,7 +35,7 @@
     <string name="go_back_to">Go back to start menu.</string>
     <string name="dummy_reply">Dummy reply</string>
     <string name="dummy_hint">Dummy hint</string>
-    <string name="title_activity_server_started">ServerStartedActivity</string>
+    <string name="title_activity_server_started">Server Started</string>
     <string name="action_settings">Settings</string>
     <string name="server_started_message">Listening on IP:</string>
     <string name="title_activity_main_activitysdasd">MainActivitysdasd</string>
@@ -43,6 +43,6 @@
     <string name="send_ip_message">Send Address</string>
      <string name="send_message">Send</string>
      <string name="disconnect_message">Disconnect</string>
-    <string name="title_activity_send_ip">SendIPActivity</string>
+    <string name="title_activity_send_ip">Send Ip </string>
 
 </resources>

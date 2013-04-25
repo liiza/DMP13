@@ -17,7 +17,7 @@
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
 <!-- 		<item name="android:background">#33B5E5</item> -->
 <!-- 		<item name="android:background">@drawable/alias</item> -->
-		<item name="android:windowNoTitle">true</item>
+<!-- 		<item name="android:windowNoTitle">true</item> -->
     </style>
 
 </resources>

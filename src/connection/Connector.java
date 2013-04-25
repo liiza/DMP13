@@ -7,7 +7,7 @@ import java.net.UnknownHostException;
 
 public interface Connector {
 	
-	public static final Connector INSTANCE = new DummyConnector();
+	public static final Connector INSTANCE = new ConnectorImpl();
 	
 	public Packet listen(PacketType expected) throws IOException;
 	
