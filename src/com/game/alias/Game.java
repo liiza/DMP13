@@ -66,7 +66,6 @@ public class Game {
 	
 	public boolean receiveStart(){
 		try{
-			Connector.INSTANCE.awaitConnection();
 			this.word = Connector.INSTANCE.listen(PacketType.START).getMessage();
 			return true;
 		} catch (IOException e) {

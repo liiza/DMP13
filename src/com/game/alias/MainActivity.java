@@ -40,7 +40,18 @@ public class MainActivity extends ListActivity {
 
 	private static final Map<String, List<Keyword>> WORDS = new HashMap<String, List<Keyword>>();
 	private static final Set<String> ABSOLUTES = new HashSet<String>();
-	private static final Set<String> KEYWORDS = new HashSet<String>();
+	public static final Set<String> KEYWORDS = new HashSet<String>();
+	public static final Set<String> DIFFICULTIES = new HashSet<String>();
+
+	private static final Set<String> difficulties = new HashSet<String>();
+
+	public static Set<String> selectedWords = new HashSet<String>();
+
+	static {
+		difficulties.add("easy");
+		difficulties.add("medium");
+		difficulties.add("hard");
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -54,10 +65,9 @@ public class MainActivity extends ListActivity {
 		ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,
 				android.R.layout.simple_list_item_1, elements);
 		this.setListAdapter(arrayAdapter);
-	
+
 	}
 
-	   
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
 		Object o = this.getListAdapter().getItem(position);
@@ -94,12 +104,12 @@ public class MainActivity extends ListActivity {
 
 	private boolean startServer() {
 		Intent intent = new Intent(this, ServerStartedActivity.class);
-//		String own_ip_address = getOwnIp();s
-//		intent.putExtra(SERVER, own_ip_address);
-//		// who starts server, must wait the other person to start the game
-//		intent.putExtra(TURN, false);
-//		// who starts server is the guesser
-//		intent.putExtra(GUESSER, true);
+		// String own_ip_address = getOwnIp();s
+		// intent.putExtra(SERVER, own_ip_address);
+		// // who starts server, must wait the other person to start the game
+		// intent.putExtra(TURN, false);
+		// // who starts server is the guesser
+		// intent.putExtra(GUESSER, true);
 		startActivity(intent);
 		return true;
 	}
@@ -130,25 +140,26 @@ public class MainActivity extends ListActivity {
 							new InputStreamReader(in, "UTF-8"));
 					String line;
 					while ((line = reader.readLine()) != null) {
-						
-						if(line.startsWith("//"))
+
+						if (line.startsWith("//"))
 							continue;
-						
-						if(line.startsWith("/*")) {
-							while((line = reader.readLine()) != null && !line.endsWith("*/")){			
+
+						if (line.startsWith("/*")) {
+							while ((line = reader.readLine()) != null
+									&& !line.endsWith("*/")) {
 							}
-							
-							if(line == null)
+
+							if (line == null)
 								break;
-							
-							if(line.endsWith("*/"))
+
+							if (line.endsWith("*/"))
 								line = reader.readLine();
-							
-							if(line == null)
+
+							if (line == null)
 								break;
-							
+
 						}
-						
+
 						String[] split = line.split(":");
 
 						if (split.length == 0)
@@ -187,14 +198,19 @@ public class MainActivity extends ListActivity {
 
 									boolean absolute = keyword.startsWith("[")
 											&& keyword.endsWith("]");
-									
+
 									if (absolute) {
 										keyword = keyword.substring(1,
 												keyword.length() - 1);
 										ABSOLUTES.add(keyword);
-									} 
+									}
+
 									Keyword key = new Keyword(keyword, false);
-									KEYWORDS.add(keyword);
+
+									if (difficulties.contains(keyword))
+										DIFFICULTIES.add(keyword);
+									else
+										KEYWORDS.add(keyword);
 
 									if (keyword.length() == 0) {
 										continue;
@@ -216,30 +232,38 @@ public class MainActivity extends ListActivity {
 
 	public static Set<String> getWordsForKeys(List<String> keywords) {
 		Set<String> selected = new HashSet<String>();
+		boolean isAbsolute = false;
+		for (String absolute : ABSOLUTES) {
+			if (keywords.contains(absolute)) {
+				isAbsolute = true;
+			}
+		}
 
 		for (String word : WORDS.keySet()) {
 			boolean match = true;
-			
-			for (String absolute : ABSOLUTES) {
-				if(WORDS.get(word).contains(new Keyword(absolute, false)) && !keywords.contains(absolute)){
-					match = false;
-					break;
+
+			if (isAbsolute)
+				for (String absolute : ABSOLUTES) {
+					if (WORDS.get(word).contains(new Keyword(absolute, false))
+							&& !keywords.contains(absolute)) {
+						match = false;
+						break;
+					}
 				}
-			}
-			
-			if(!match)
+
+			if (!match)
 				continue;
-			
+
 			for (String keyword : keywords) {
 				if (!WORDS.get(word).contains(new Keyword(keyword, false))) {
 					match = false;
 					break;
 				}
 			}
-			
-			if(!match)
+
+			if (!match)
 				continue;
-			
+
 			selected.add(word);
 		}
 		return selected;

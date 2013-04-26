@@ -46,7 +46,7 @@ public class ConnectorImpl implements Connector {
 	public boolean awaitConnection() throws IOException{
 		init();
 		
-		if(connected = true){
+		if(connected){
 			return false;
 		}
 		
@@ -59,7 +59,7 @@ public class ConnectorImpl implements Connector {
 	public boolean connect(String ip) throws IOException {
 		init();
 
-		if (connected = true)
+		if (connected)
 			return false;
 
 		InetAddress serverAddr = InetAddress.getByName(ip);

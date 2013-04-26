@@ -34,6 +34,7 @@
             </intent-filter>
         </activity>
         <activity
+            android:windowSoftInputMode="stateUnchanged"
             android:name="com.game.alias.ConnectServerActivity"
             android:label="@string/title_activity_connect_server" >
         </activity>
@@ -42,7 +43,7 @@
             android:label="@string/title_activity_start_server" >
         </activity>
         <activity
-            android:name="com.game.alias.GameActivity"
+            android:name="com.game.alias.GameMasterActivity"
             android:label="@string/title_activity_game" >
         </activity>
         <activity
@@ -52,6 +53,10 @@
         <activity
             android:name="com.game.alias.SendIPActivity"
             android:label="@string/title_activity_send_ip" >
+        </activity>
+        <activity
+            android:name="com.game.alias.GuesserGameActivity"
+            android:label="@string/title_activity_guesser_game" >
         </activity>
     </application>
 

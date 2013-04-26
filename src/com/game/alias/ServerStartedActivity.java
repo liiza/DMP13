@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import connection.Connector;
 import connection.PacketType;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.app.Activity;
@@ -41,8 +42,7 @@ public class ServerStartedActivity extends Activity {
 			this.ip = Connector.INSTANCE.getAddress();
 			ipField.setText(this.ip);
 
-			Thread t = new Thread(new ConnectionListenerThread());
-			t.start();
+			new ConnectionListenerTask().execute();
 		} catch (IOException e) {
 			View sendIpButton = findViewById(R.id.send_ip_button);
 			View listeningIndicator = findViewById(R.id.listening_indicator);
@@ -58,7 +58,6 @@ public class ServerStartedActivity extends Activity {
 	protected void onStop() {
 		super.onStop();
 		listen = false;
-		listenStart = false;
 		disconnect(null);
 	}
 	
@@ -66,7 +65,6 @@ public class ServerStartedActivity extends Activity {
 	protected void onPause() {
 		super.onPause();
 		listen = false;
-		listenStart = false;
 		disconnect(null);
 	}
 	
@@ -76,12 +74,7 @@ public class ServerStartedActivity extends Activity {
 	public final static String WORD = "WORD";
 
 	public boolean startGame(View view) {
-		Intent intent = new Intent(this, GameActivity.class);
-		// who starts server, must wait the other person to start the game
-		intent.putExtra(TURN, false);
-		// who starts server is the guesser
-		intent.putExtra(GUESSER, true);
-		intent.putExtra(WORD, receivedWord);
+		Intent intent = new Intent(this, GuesserGameActivity.class);
 		startActivity(intent);
 		finish();
 		return true;
@@ -130,50 +123,24 @@ public class ServerStartedActivity extends Activity {
 
 	private void updateUI() {
 		TextView messageField = (TextView) findViewById(R.id.server_started_message);
-		messageField.setText("Connected! Waiting for start.");
+		messageField.setText("Connected!");
 		View listeningIndicator = (ProgressBar) findViewById(R.id.listening_indicator);
 		listeningIndicator.setVisibility(View.GONE);
 		View disconnectButton = findViewById(R.id.disconnect_button);
 		disconnectButton.setVisibility(View.VISIBLE);
-		
-		Thread startThread = new Thread(new StartReceiverThread());
-		listenStart = true;
-		startThread.start();
-	}
-	
-	private void updateStart() {
-		TextView messageField = (TextView) findViewById(R.id.server_started_message);
-		messageField.setText("Game is ready to start.");
 		View startGameButton = findViewById(R.id.start_game_button);
 		startGameButton.setVisibility(View.VISIBLE);
 	}
-
-	private boolean listenStart;
-	private String receivedWord;
-
-	private class StartReceiverThread implements Runnable {
-
-		@Override
-		public void run() {
-
-			while (listenStart)
-				try {
-					receivedWord = Connector.INSTANCE.listen(PacketType.START)
-							.getMessage();
-					handler.post(updateStartRunnable);
-					listenStart = false;
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-		}
-	}
 	
-	private final Handler handler = new Handler();
 
-	private class ConnectionListenerThread implements Runnable {
+	private final Handler handler = new Handler();
+	
+	
+
+	private class ConnectionListenerTask extends AsyncTask {
 
 		@Override
-		public void run() {
+		protected Object doInBackground(Object... arg0) {
 			while (listen)
 				try {
 					Connector.INSTANCE.awaitConnection();
@@ -182,6 +149,7 @@ public class ServerStartedActivity extends Activity {
 				} catch (IOException e) {
 
 				}
+			return null;
 		}
 
 	}
@@ -192,11 +160,4 @@ public class ServerStartedActivity extends Activity {
 		}
 	};
 	
-	final Runnable updateStartRunnable = new Runnable(){
-		public void run() {
-			updateStart();
-		}
-
-	};
-
 }
