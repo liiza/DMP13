@@ -1,0 +1,67 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    tools:context=".GameActivity" >
+
+    <EditText
+        android:id="@+id/hint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/server_connected"
+        android:hint="@string/edit_hint" />
+
+    <Button
+        android:id="@+id/hint_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/hint"
+        android:onClick="sendHint"
+        android:text="@string/send_hint" />
+
+    <EditText
+        android:id="@+id/guess"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/server_connected"
+        android:hint="@string/edit_guess" />
+
+    <Button
+        android:id="@+id/guess_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/guess"
+        android:onClick="sendGuess"
+        android:text="@string/send_guess" />
+
+    <Button
+        android:id="@+id/start_new_game_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/server_connected"
+        android:onClick="restartGame"
+        android:text="@string/start_new_game" />
+
+    <ProgressBar
+        android:id="@+id/waiting_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/hint"
+        android:layout_below="@+id/hint" />
+
+    <TextView
+        android:id="@+id/server_connected"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/hint"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/start_new_game_button"
+        android:layout_marginTop="16dp"
+        android:text="Dummy"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+
+
+</RelativeLayout>
