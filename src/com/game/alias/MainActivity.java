@@ -83,8 +83,7 @@ public class MainActivity extends ListActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.activity_main, menu);
+		// no menu
 		return true;
 	}
 
@@ -115,20 +114,7 @@ public class MainActivity extends ListActivity {
 		return true;
 	}
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle item selection
-		switch (item.getItemId()) {
-		case R.id.connect_server:
-			connectServer();
-			return true;
-		case R.id.start_server:
-			startServer();
-			return true;
-		default:
-			return super.onOptionsItemSelected(item);
-		}
-	}
+
 
 	private void readWords() {
 		AssetManager assetManager = getAssets();

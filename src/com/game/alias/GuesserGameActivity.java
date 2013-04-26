@@ -27,6 +27,7 @@ public class GuesserGameActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_guesser_game);
+		
 
 		TextView upper = (TextView) findViewById(R.id.upper_guess_msg);
 		TextView hint = (TextView) findViewById(R.id.hint_message);
@@ -51,8 +52,7 @@ public class GuesserGameActivity extends Activity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.guesser_game, menu);
+		//no menu
 		return true;
 	}
 
