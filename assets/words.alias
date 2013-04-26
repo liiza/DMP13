@@ -37,7 +37,9 @@ madness:sparta
 [easy],animals,birds : Chicken,Duck,Seagull,Raven,Crow
 [easy],drinks,alcohol : Wine,Beer,Whiskey,Whisky,Cognac,Champagne,Sparkling Wine
 [easy],vehicles,technology : Car,Bus,Boat,Train,Airplane
+[easy],verbs : Run,Hear,See,Say
 [medium],adjectives : Trustworty,Gullible,Vicarious
 [medium],technology : Microchip,Nuclear Fission
 [hard],animals : Omnivore
 [hard],adjectives : Geocentric
+[hard],philosophy : Communism, Existentialism

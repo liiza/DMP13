@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -45,7 +46,7 @@ public class MainActivity extends ListActivity {
 
 	private static final Set<String> difficulties = new HashSet<String>();
 
-	public static Set<String> selectedWords = new HashSet<String>();
+	public static List<String> selectedWords = new ArrayList<String>();
 
 	static {
 		difficulties.add("easy");
@@ -230,8 +231,8 @@ public class MainActivity extends ListActivity {
 
 	}
 
-	public static Set<String> getWordsForKeys(List<String> keywords) {
-		Set<String> selected = new HashSet<String>();
+	public static List<String> getWordsForKeys(List<String> keywords) {
+		List<String> selected = new ArrayList<String>();
 		boolean isAbsolute = false;
 		for (String absolute : ABSOLUTES) {
 			if (keywords.contains(absolute)) {
@@ -266,6 +267,8 @@ public class MainActivity extends ListActivity {
 
 			selected.add(word);
 		}
+		
+		Collections.sort(selected);
 		return selected;
 	}
 

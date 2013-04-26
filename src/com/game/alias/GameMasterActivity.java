@@ -77,7 +77,7 @@ public class GameMasterActivity extends Activity {
 	}
 
 	private String randomizeWord(List<String> keywords) {
-		Set<String> words = MainActivity.selectedWords;
+		List<String> words = MainActivity.selectedWords;
 		if(words.size() == 1){
 			return words.toArray(new String[0])[0];
 		}

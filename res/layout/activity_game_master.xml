@@ -1,0 +1,87 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    tools:context=".GameMasterActivity" >
+    
+    
+
+<!--     <Button -->
+<!--         android:id="@+id/go_back_to_button" -->
+<!--         android:layout_width="wrap_content" -->
+<!--         android:layout_height="wrap_content" -->
+<!--         android:layout_below="@+id/start_new_game_button" -->
+<!--         android:onClick="sendHint" -->
+<!--         android:text="@string/go_back_to" /> -->
+
+    <TextView
+        android:id="@+id/upper_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/hint"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="14dp"
+        android:text="Message"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/word_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/upper_message"
+        android:layout_below="@+id/upper_message"
+        android:text="Large Text"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/lower_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/word_message"
+        android:layout_below="@+id/word_message"
+        android:text="Medium Text"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <EditText
+        android:id="@+id/hint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/hint_button"
+        android:layout_below="@+id/lower_message"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:hint="@string/edit_hint" >
+
+        <requestFocus />
+    </EditText>
+
+    <Button
+        android:id="@+id/hint_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/hint"
+        android:layout_marginLeft="17dp"
+        android:onClick="sendHint"
+        android:text="@string/send_hint" />
+
+    <Button
+        android:id="@+id/start_new_game_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/upper_message"
+        android:layout_below="@+id/upper_message"
+        android:layout_centerHorizontal="true"
+        android:onClick="restartGame"
+        android:text="@string/start_new_game" />
+
+    <ProgressBar
+        android:id="@+id/waiting_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/upper_message"
+         />
+
+</RelativeLayout>
